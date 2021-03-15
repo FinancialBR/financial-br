@@ -6,7 +6,7 @@ import br.com.lepsistemas.financial.domain.exception.MoneyCannotWorthNullValueEx
 import java.math.BigDecimal;
 import java.util.Objects;
 
-public class Money {
+public class Money implements Comparable<Money> {
 
     private BigDecimal value;
 
@@ -32,6 +32,14 @@ public class Money {
         return this.value;
     }
 
+    public Money plus(Money money) {
+        return Money.worth(this.value.add(money.value));
+    }
+
+    public Money minus(Money money) {
+        return Money.worth(this.value.subtract(money.value));
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -43,5 +51,15 @@ public class Money {
     @Override
     public int hashCode() {
         return Objects.hash(value);
+    }
+
+    @Override
+    public int compareTo(Money other) {
+        return this.value.compareTo(other.value());
+    }
+
+    @Override
+    public String toString() {
+        return "Money{value=" + value + "}";
     }
 }
