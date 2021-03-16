@@ -58,4 +58,12 @@ class MoneyTest {
         assertEquals(money1.plus(money2), Money.worth("200"));
     }
 
+    @Test
+    void should_be_symmetric() {
+        Money money1 = Money.worth("100");
+        Money money2 = Money.worth("100");
+        assertTrue(money1.equals(money2) && money2.equals(money1));
+        assertTrue(money1.hashCode() == money2.hashCode());
+    }
+
 }
