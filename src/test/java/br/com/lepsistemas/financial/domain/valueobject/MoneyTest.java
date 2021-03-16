@@ -52,6 +52,11 @@ class MoneyTest {
     }
 
     @Test
+    void should_be_zero() {
+        assertTrue(Money.worth("0").isZero());
+    }
+
+    @Test
     void should_sum_money() {
         Money money1 = Money.worth("100");
         Money money2 = Money.worth("100");
