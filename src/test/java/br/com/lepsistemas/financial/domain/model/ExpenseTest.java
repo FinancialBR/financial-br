@@ -1,5 +1,6 @@
 package br.com.lepsistemas.financial.domain.model;
 
+import br.com.lepsistemas.financial.domain.exception.AbsentInstallmentException;
 import br.com.lepsistemas.financial.domain.valueobject.Money;
 import org.junit.jupiter.api.Test;
 
@@ -7,6 +8,7 @@ import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ExpenseTest {
@@ -23,13 +25,24 @@ class ExpenseTest {
     }
 
     @Test
+    void should_divide_expense_in_multiple_installments() {
+        LocalDate emissionDate = LocalDate.now();
+        LocalDate dueDate = LocalDate.now().plusDays(1L);
+        Expense expense = new Expense(Money.worth("100"), emissionDate, dueDate);
+        LocalDate installmentDueDate = LocalDate.now().plusMonths(1L);
+        expense.addInstallment(Money.worth("50"), installmentDueDate);
+
+        assertEquals(expense.dueDate(), installmentDueDate);
+    }
+
+    @Test
     void should_be_fully_paid() {
         LocalDate emissionDate = LocalDate.now();
         LocalDate dueDate = LocalDate.now().plusDays(1L);
         Expense expense = new Expense(Money.worth("100"), emissionDate, dueDate);
 
         LocalDate paymentDate = LocalDate.now().plusWeeks(1L);
-        expense.pay(paymentDate, Money.worth("100"));
+        expense.pay(Money.worth("100"), paymentDate, dueDate);
 
         assertTrue(expense.isFullyPaid());
     }
@@ -41,9 +54,21 @@ class ExpenseTest {
         Expense expense = new Expense(Money.worth("100"), emissionDate, dueDate);
 
         LocalDate paymentDate = LocalDate.now().plusWeeks(1L);
-        expense.pay(paymentDate, Money.worth("99.99"));
+        expense.pay(Money.worth("99.99"), paymentDate, dueDate);
 
         assertFalse(expense.isFullyPaid());
+    }
+
+    @Test
+    void should_throw_exception_when_trying_to_pay_absent_installment() {
+        LocalDate emissionDate = LocalDate.now();
+        LocalDate dueDate = LocalDate.now().plusDays(1L);
+        Expense expense = new Expense(Money.worth("100"), emissionDate, dueDate);
+
+        assertThrows(AbsentInstallmentException.class, () -> {
+            LocalDate paymentDate = LocalDate.now().plusWeeks(1L);
+            expense.pay(Money.worth("99.99"), paymentDate, dueDate.plusDays(1L));
+        });
     }
 
 }

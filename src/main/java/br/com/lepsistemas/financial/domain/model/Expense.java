@@ -1,44 +1,59 @@
 package br.com.lepsistemas.financial.domain.model;
 
+import br.com.lepsistemas.financial.domain.exception.AbsentInstallmentException;
 import br.com.lepsistemas.financial.domain.valueobject.Money;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
 
 public class Expense {
 
-    private final Money grossValue;
     private final LocalDate emissionDate;
-    private final LocalDate dueDate;
-
-    private Money paidValue;
-    private LocalDate paymentDate;
+    private final List<Installment> installments;
 
     public Expense(Money grossValue, LocalDate emissionDate, LocalDate dueDate) {
-        this.grossValue = grossValue;
         this.emissionDate = emissionDate;
-        this.dueDate = dueDate;
+        this.installments = new ArrayList<>();
+        this.addInstallment(grossValue, dueDate);
     }
 
-    public void pay(LocalDate paymentDate, Money value) {
-        this.paymentDate = paymentDate;
-        this.paidValue = value;
+    public void pay(Money value, LocalDate paymentDate, LocalDate dueDate) {
+        Optional<Installment> optionalOfInstallment = this.installments.stream()
+                .filter(installment -> installment.dueDate().equals(dueDate))
+                .findFirst();
+        if (!optionalOfInstallment.isPresent()) {
+            throw new AbsentInstallmentException();
+        }
+        Installment installment = optionalOfInstallment.get();
+        installment.pay(value, paymentDate);
     }
 
     public boolean isFullyPaid() {
-        return this.paymentDate != null && this.grossValue.compareTo(this.paidValue) == 0;
+        return this.installments.stream()
+                .allMatch(Installment::isFullyPaid);
     }
 
-    public Money remainingValue() {
-        return this.grossValue.minus(this.paidValue);
+    public void addInstallment(Money grossValue, LocalDate dueDate) {
+        this.installments.add(new Installment(grossValue, dueDate));
     }
 
-    public Money grossValue() { return this.grossValue; }
+    public Money grossValue() {
+        return this.installments.stream()
+                .map(installment -> installment.grossValue())
+                .reduce(Money.worth(BigDecimal.ZERO), Money::plus);
+    }
 
     public LocalDate emissionDate() {
         return this.emissionDate;
     }
 
     public LocalDate dueDate() {
-        return this.dueDate;
+        return this.installments.stream()
+                .sorted(Comparator.comparing(Installment::dueDate).reversed())
+                .findFirst().get().dueDate();
     }
 }
