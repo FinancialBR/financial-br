@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -59,11 +60,29 @@ class MoneyTest {
     }
 
     @Test
-    void should_be_symmetric() {
+    void should_test_equals() {
         Money money1 = Money.worth("100");
         Money money2 = Money.worth("100");
+
+        assertTrue(money1.equals(money1));
+        assertFalse(money1.equals(null));
+        assertFalse(money1.equals(new String()));
         assertTrue(money1.equals(money2) && money2.equals(money1));
+    }
+
+    @Test
+    void should_test_hash_code() {
+        Money money1 = Money.worth("100");
+        Money money2 = Money.worth("100");
+
         assertTrue(money1.hashCode() == money2.hashCode());
+    }
+
+    @Test
+    void should_test_to_string() {
+        Money money = Money.worth("100");
+
+        assertEquals("Money{value=100}", money.toString());
     }
 
 }
