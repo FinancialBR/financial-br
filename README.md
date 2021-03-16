@@ -60,4 +60,11 @@ Of course that you can use class Money as well or any other Currency value objec
 
 ---
 
+Telegram group: [https://t.me/joinchat/HMDpAq-d3MJmMDMx](https://t.me/joinchat/HMDpAq-d3MJmMDMx)
+
+Icons made by: [Freepik](https://www.freepik.com/) from [www.flaticon.com](https://www.flaticon.com/)
+
+---
+
 __*__ Edit: This is still a Working In Progress API. Artifacts are not yet deployed into Maven Repository.
+
