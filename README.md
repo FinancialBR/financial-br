@@ -4,7 +4,7 @@
 
 FinancialBR is a set of core financial systems entities that allow you work with the most common brazilian operations.
 
-#### Adding FinancialBR to your project
+### Adding FinancialBR to your project
 
 FinancialBR's Maven groupId **WILL BE** `br.com.lepsistemas`, and its artifactId **WILL BE** `financial-br`. *
 
