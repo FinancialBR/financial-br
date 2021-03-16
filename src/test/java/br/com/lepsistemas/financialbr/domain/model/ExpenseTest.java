@@ -1,7 +1,8 @@
-package br.com.lepsistemas.financial.domain.model;
+package br.com.lepsistemas.financialbr.domain.model;
 
-import br.com.lepsistemas.financial.domain.exception.AbsentInstallmentException;
-import br.com.lepsistemas.financial.domain.valueobject.Money;
+import br.com.lepsistemas.financialbr.domain.exception.AbsentInstallmentException;
+import br.com.lepsistemas.financialbr.domain.valueobject.Money;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -19,7 +20,7 @@ class ExpenseTest {
         LocalDate dueDate = LocalDate.now().plusDays(1L);
         Expense expense = new Expense(Money.worth("100"), emissionDate, dueDate);
 
-        assertEquals(Money.worth("100"), expense.grossValue());
+        Assertions.assertEquals(Money.worth("100"), expense.grossValue());
         assertEquals(emissionDate, expense.emissionDate());
         assertEquals(dueDate, expense.dueDate());
     }

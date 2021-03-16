@@ -1,7 +1,7 @@
-package br.com.lepsistemas.financial.domain.valueobject;
+package br.com.lepsistemas.financialbr.domain.valueobject;
 
-import br.com.lepsistemas.financial.domain.exception.MoneyCannotWorthNegativeValueException;
-import br.com.lepsistemas.financial.domain.exception.MoneyCannotWorthNullValueException;
+import br.com.lepsistemas.financialbr.domain.exception.MoneyCannotWorthNegativeValueException;
+import br.com.lepsistemas.financialbr.domain.exception.MoneyCannotWorthNullValueException;
 
 import java.math.BigDecimal;
 import java.util.Objects;

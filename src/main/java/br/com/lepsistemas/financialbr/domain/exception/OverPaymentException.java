@@ -1,4 +1,4 @@
-package br.com.lepsistemas.financial.domain.exception;
+package br.com.lepsistemas.financialbr.domain.exception;
 
 public class OverPaymentException extends RuntimeException {
 }

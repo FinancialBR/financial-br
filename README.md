@@ -6,7 +6,7 @@ FinancialBR is a set of core financial systems entities that allow you work with
 
 ### Adding FinancialBR to your project
 
-FinancialBR's Maven groupId **WILL BE** `br.com.lepsistemas`, and its artifactId **WILL BE** `financial-br`. *
+FinancialBR's Maven groupId **WILL BE** `br.com.lepsistemas`, and its artifactId **WILL BE** `financial-br`. __*__
 
 To add a dependency on FinancialBR using Maven, use the following:
 
@@ -31,7 +31,7 @@ dependencies {
 As we learned from the Design Patterns and the Open-Closed Principle from SOLID, we should almost always chose composition over inheritance. Well, it's not different of how I suggest you to use this lib:
 
 ```java
-import br.com.lepsistemas.financial.domain.model.Expense;
+import br.com.lepsistemas.financialbr.domain.model.Expense;
 
 public class YourExpense {
     
@@ -60,4 +60,4 @@ Of course that you can use class Money as well or any other Currency value objec
 
 ---
 
-* Edit: This is still a Working In Progress API. Artifacts are not yet deployed into Maven Repository.
+__*__ Edit: This is still a Working In Progress API. Artifacts are not yet deployed into Maven Repository.

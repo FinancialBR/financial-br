@@ -1,7 +1,7 @@
-package br.com.lepsistemas.financial.domain.model;
+package br.com.lepsistemas.financialbr.domain.model;
 
-import br.com.lepsistemas.financial.domain.exception.AbsentInstallmentException;
-import br.com.lepsistemas.financial.domain.valueobject.Money;
+import br.com.lepsistemas.financialbr.domain.exception.AbsentInstallmentException;
+import br.com.lepsistemas.financialbr.domain.valueobject.Money;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
