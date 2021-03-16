@@ -1,9 +1,13 @@
 plugins {
     id 'java'
+    id 'jacoco'
 }
 
-group 'org.example'
-version '1.0-SNAPSHOT'
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+group 'br.com.lepsistemas'
+version '1.0'
 
 repositories {
     mavenCentral()
@@ -17,3 +21,15 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        xml.destination file("${buildDir}/reports/jacoco/report.xml")
+        html.enabled true
+        html.destination file("${buildDir}/reports/jacoco/report.html")
+        csv.enabled false
+    }
+}
+
+check.dependsOn jacocoTestReport
