@@ -2,7 +2,6 @@ package br.com.lepsistemas.financialbr.domain.model;
 
 import br.com.lepsistemas.financialbr.domain.exception.AbsentInstallmentException;
 import br.com.lepsistemas.financialbr.domain.valueobject.Money;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -15,18 +14,19 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class ExpenseTest {
 
     @Test
-    void should_create_an_expense() {
+    void should_create_a_lump_sum_expense() {
         LocalDate emissionDate = LocalDate.now();
         LocalDate dueDate = LocalDate.now().plusDays(1L);
         Expense expense = new Expense(Money.worth("100"), emissionDate, dueDate);
 
-        Assertions.assertEquals(Money.worth("100"), expense.grossValue());
+        assertEquals(Money.worth("100"), expense.grossValue());
         assertEquals(emissionDate, expense.emissionDate());
         assertEquals(dueDate, expense.dueDate());
+        assertTrue(expense.isLumpSum());
     }
 
     @Test
-    void should_divide_expense_in_multiple_installments() {
+    void should_create_an_expense_with_multiple_installments() {
         LocalDate emissionDate = LocalDate.now();
         LocalDate dueDate = LocalDate.now().plusDays(1L);
         Expense expense = new Expense(Money.worth("100"), emissionDate, dueDate);
@@ -34,6 +34,7 @@ class ExpenseTest {
         expense.addInstallment(Money.worth("50"), installmentDueDate);
 
         assertEquals(expense.dueDate(), installmentDueDate);
+        assertFalse(expense.isLumpSum());
     }
 
     @Test

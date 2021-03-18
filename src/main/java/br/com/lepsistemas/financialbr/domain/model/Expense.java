@@ -56,4 +56,8 @@ public class Expense {
                 .sorted(Comparator.comparing(Installment::dueDate).reversed())
                 .findFirst().get().dueDate();
     }
+
+    public boolean isLumpSum() {
+        return this.installments.size() == 1;
+    }
 }
