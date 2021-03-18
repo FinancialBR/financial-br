@@ -17,7 +17,7 @@ Existing issues often contain information about workarounds, resolution, or prog
 🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅-->
 
 
-# 🐞 bug report
+# 🐞  Bug report
 
 ### Description
 

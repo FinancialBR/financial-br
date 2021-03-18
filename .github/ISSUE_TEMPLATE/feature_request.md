@@ -17,7 +17,7 @@ Existing issues often contain information about workarounds, resolution, or prog
 🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅-->
 
 
-# 🚀 feature request
+# 🚀  Feature request
 
 ### Description
 <!-- ✍️--> A clear and concise description of the problem or missing capability...
