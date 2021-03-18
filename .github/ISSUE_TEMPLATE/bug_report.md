@@ -2,7 +2,7 @@
 name: Bug report
 about: Create a report to help us improve
 title: "[BUG]"
-labels: ''
+labels: bug
 assignees: ''
 
 ---
@@ -30,8 +30,6 @@ Please create and share minimal reproduction of the issue
 -->
 
 Issues that don't have enough info and can't be reproduced will be closed.
-
--->
 
 ## 🔥 Exception or Error
 <pre><code>
