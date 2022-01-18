@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -42,7 +43,7 @@ class ExpenseTest {
         LocalDate dueDate = LocalDate.now().plusDays(1L);
         Expense expense = new Expense(Money.worth("100"), emissionDate, dueDate);
 
-        LocalDate paymentDate = LocalDate.now().plusWeeks(1L);
+        LocalDateTime paymentDate = LocalDateTime.now().plusWeeks(1L);
         expense.pay(Money.worth("100"), paymentDate, dueDate);
 
         assertTrue(expense.isFullyPaid());
@@ -54,7 +55,7 @@ class ExpenseTest {
         LocalDate dueDate = LocalDate.now().plusDays(1L);
         Expense expense = new Expense(Money.worth("100"), emissionDate, dueDate);
 
-        LocalDate paymentDate = LocalDate.now().plusWeeks(1L);
+        LocalDateTime paymentDate = LocalDateTime.now().plusWeeks(1L);
         expense.pay(Money.worth("99.99"), paymentDate, dueDate);
 
         assertFalse(expense.isFullyPaid());
@@ -67,9 +68,8 @@ class ExpenseTest {
         Expense expense = new Expense(Money.worth("100"), emissionDate, dueDate);
 
         assertThrows(AbsentInstallmentException.class, () -> {
-            LocalDate paymentDate = LocalDate.now().plusWeeks(1L);
+            LocalDateTime paymentDate = LocalDateTime.now().plusWeeks(1L);
             expense.pay(Money.worth("99.99"), paymentDate, dueDate.plusDays(1L));
         });
     }
-
 }

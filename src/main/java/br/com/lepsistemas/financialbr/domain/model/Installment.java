@@ -4,15 +4,18 @@ import br.com.lepsistemas.financialbr.domain.exception.OverPaymentException;
 import br.com.lepsistemas.financialbr.domain.exception.ZeroedInstallmentException;
 import br.com.lepsistemas.financialbr.domain.valueobject.Money;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Installment {
 
     private final Money grossValue;
     private final LocalDate dueDate;
 
-    private Money paidValue;
-    private LocalDate paymentDate;
+    List<Payment> payments;
 
     public Installment(Money grossValue, LocalDate dueDate) {
         if (grossValue.isZero()) {
@@ -20,18 +23,19 @@ public class Installment {
         }
         this.grossValue = grossValue;
         this.dueDate = dueDate;
+        this.payments = new ArrayList<>();
     }
 
-    public void pay(Money value, LocalDate paymentDate) {
+    public void pay(Money value, LocalDateTime paymentDate) {
         if (value.compareTo(this.netValue()) > 0) {
             throw new OverPaymentException();
         }
-        this.paidValue = value;
-        this.paymentDate = paymentDate;
+        payments.add(new Payment(value, paymentDate));
+
     }
 
     public boolean isFullyPaid() {
-        return this.netValue().compareTo(this.paidValue) == 0;
+        return this.netValue().compareTo(Money.worth(BigDecimal.ZERO)) == 0;
     }
 
     public Money grossValue() {
@@ -39,14 +43,21 @@ public class Installment {
     }
 
     public Money netValue() {
-        return this.grossValue;
+        return this.grossValue
+                .minus(payments
+                        .stream()
+                        .map(payment -> payment.getPaidValue())
+                        .reduce(Money.worth(BigDecimal.ZERO), Money::plus));
     }
 
     public LocalDate dueDate() {
         return this.dueDate;
     }
 
-    public LocalDate paymentDate() {
-        return this.paymentDate;
+    public LocalDateTime lastPayment() {
+        return payments
+                .stream()
+                .map(payment -> payment.getPaymentDate())
+                .max((date1, date2) -> date1.compareTo(date2)).orElse(null);
     }
 }

@@ -36,6 +36,10 @@ public class Money implements Comparable<Money> {
         return Money.worth(this.value.add(money.value));
     }
 
+    public Money minus(Money money) {
+        return Money.worth(this.value.subtract(money.value));
+    }
+
     public boolean isZero() {
         return BigDecimal.ZERO.equals(this.value);
     }
