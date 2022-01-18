@@ -5,6 +5,7 @@ import br.com.lepsistemas.financialbr.domain.valueobject.Money;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -21,7 +22,7 @@ public class Expense {
         this.addInstallment(grossValue, dueDate);
     }
 
-    public void pay(Money value, LocalDate paymentDate, LocalDate dueDate) {
+    public void pay(Money value, LocalDateTime paymentDate, LocalDate dueDate) {
         Optional<Installment> optionalOfInstallment = this.installments.stream()
                 .filter(installment -> installment.dueDate().equals(dueDate))
                 .findFirst();

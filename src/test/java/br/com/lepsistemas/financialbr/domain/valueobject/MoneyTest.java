@@ -65,6 +65,15 @@ class MoneyTest {
     }
 
     @Test
+    void should_subtract_money() {
+        Money money1 = Money.worth("100");
+        Money money2 = Money.worth("100");
+
+        assertEquals(money1.minus(money2), Money.worth("0"));
+    }
+
+
+    @Test
     void should_test_equals() {
         Money money1 = Money.worth("100");
         Money money2 = Money.worth("100");
@@ -89,5 +98,4 @@ class MoneyTest {
 
         assertEquals("Money{value=100}", money.toString());
     }
-
 }
